@@ -1,0 +1,308 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>complint </title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <!-- Stylesheets -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+   
+    <style type="text/css">
+    	.nav
+    	{
+    		background-color:white; 
+    		width: 100%;
+    		height: 50%;
+    		margin-top:5px;
+    		border-radius: 5px;
+
+    	}
+    	.logo
+    	{
+    		width:200px;
+    		height:100px;
+    		padding: 10px;
+    	}
+   body
+    	{
+    		background-image: url("{% static 'images/logo-back.jpg' %}");
+    		background-repeat:no-repeat;
+    		background-size: 100%;
+    	}
+    	@media only screen and (max-width: 600px) {
+  body {
+    
+     		background-image: url("{% static 'images/logo-back.jpg' %}");
+    		background-repeat:no-repeat;
+    		background-attachment: fixed;
+    		background-size: auto;
+  }
+}
+.input-group-prepend span{
+width: 50px;
+background-color: #FFC312;
+color: black;
+border:0 !important;
+
+}
+
+input:focus{
+outline: 0 0 0 0  !important;
+box-shadow: 0 0 0 0 !important;
+}
+ </style>
+
+</head>
+<body class="y">
+	<header>
+		<div class="col-md-12  col-md-offset-  nav" >
+			<a href="/user_login/logout"><img src="{% static 'images/Logo-Mukand.jpg' %}" class="logo"></a>
+			 <span style="font-size: 20px; color: #184bab; margin-left:50px; margin-top: 25px;">Seth Jai Parkash Mukand Lal Institute of Engineering &amp; Technology (JMIT)</span>
+           
+           <span style="margin-left: 300px; margin-top:60px; ">
+             {{homename}} <a href="/user_login/logout"><span class="glyphicon glyphicon-log-out">logout</span></a>
+            </span>
+           </div>
+	</header>
+	  <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                           <div class="row">
+                <div class="col-lg-3 col-lg-offset-2">
+                          <a href="#" class="active btn-info btn" id="login-form-link">PENDING</a>
+                          </div>
+                          <div class="col-lg-3">
+                          <a href="#" id="register-form-link" class="btn btn-success">APPROVED</a>
+                            </div>
+                <div class="col-lg-3"> 
+                          <a href="#" class="btn btn-danger" id="form-link"> COMPLETED </a>
+                    </div>
+                
+                          </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive" id="login-form" style="display: block;">
+                               <div class="panel-heading" ><strong>ALL DATA</strong> </div>
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                            <th>NAME</th>
+                                            <th>ROLLNO </th>
+                                            <th>DEPERTMENT</th>
+                                            <th>ROOM NO.</th>
+                                            <th>SUBJECT</th>
+                                            <th>TYPE</th>
+                                            <th>DESCRIPTION</th>
+                                            <th>ACTION</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for com in comp %} 
+                                        <tr class="gradeU">
+                            
+                                            <td>{{com.name}}</td>
+                                            <td>All others</td>
+                                            <td>{{com.department}}</td>
+                                            <td class="center">{{com.roomno}}</td>
+                                            <td class="center">{{com.subject}}</td>
+                                            <td class="center">{{com.problem_type}}</td>
+                                            <td class="center">{{com.description}}</td>
+                                            <form method="post" action="pending/{{com.id}}">
+                                            {% csrf_token %}
+                                            <td class="center"><select class="btn btn-info" id="department" placeholder="Enter Department" name="pending">
+                                            <option  value="approved">APPROVED</option>
+                                            <option value="completed">COMPLETED</option>
+                                            </select>
+                                            <button type="submit" class="btn btn-info"> CHANGE </button> </a> </td>
+                                            </form>
+                                            
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- all div close  -->
+<!-- Modal start for  all div -->
+  <div class="modal fade" id="all" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Change Status</h4>
+        </div>
+        <div class="modal-body"><center>
+          <a href="pending/"><button class="btn btn-danger"> Completed </button> </a> 
+           <a href="resolve/"><button class="btn btn-info">Resolve </button></a>
+          {% comment %} <a href="completed/"> <button class="btn btn-success">Completed </button></a>  {% endcomment %}
+          </center>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <!-- Modal close for  all div -->
+
+                            <!--pendding div start   -->
+                            <div class="table-responsive" id="register-form" style="display: none;">
+                               <div class="panel-heading" ><strong>APPROVED</strong> </div>
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                            <th>NAME</th>
+                                            <th>ROLLNO </th>
+                                            <th>DEPERTMENT</th>
+                                            <th>ROOM NO.</th>
+                                            <th>SUBJECT</th>
+                                            <th>TYPE</th>
+                                            <th>DESCRIPTION</th>
+                                            <th>ACTION</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for compa in compa %}
+                                        <tr class="gradeU">
+                                            <td>{{compa.name}}</td>
+                                            <td>All others</td>
+                                            <td>{{compa.department}}</td>
+                                            <td class="center">{{compa.roomno}}</td>
+                                            <td class="center">{{compa.subject}}</td>
+                                            <td class="center">{{compa.problem_type}}</td>
+                                            <td class="center">{{compa.description}}</td>
+                                            <form method="post" action="pending/{{compa.id}}">
+                                            {% csrf_token %}
+                                            <td class="center"><select class="btn btn-info" id="department" placeholder="Enter Department" name="pending">
+                                            <option  value="completed">COMPLETED</option>
+                                            </select>
+                                            <button type="submit" class="btn btn-info"> CHANGE </button> </a> </td>
+                                            {% endfor %}
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- all pending close  -->
+
+
+<!-- Modal start for  pending div -->
+ <div class="modal fade" id="pending" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Change status</h4>
+        </div>
+        <div class="modal-body"><center>
+          <button class="btn btn-success">Completed</button>
+          </center>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <!-- Modal close for pending div -->
+
+<!-- pending div close -->
+
+                            <!--history  div start-->
+                            <div class="table-responsive" id="HOLIDAYS" style="display: none;">
+                               <div class="panel-heading" ><strong>HISTORY</strong> </div>
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                            <th>NAME</th>
+                                            <th>ROLLNO </th>
+                                            <th>DEPERTMENT</th>
+                                            <th>ROOM NO.</th>
+                                            <th>SUBJECT</th>
+                                            <th>TYPE</th>
+                                            <th>DESCRIPTION</th>
+                                            <th>ACTION</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for compc in compc %}
+                                        <tr class="gradeU">
+                                            <td>{{compc.name}}</td>
+                                            <td>All others</td>
+                                            <td>{{compc.department}}</td>
+                                            <td class="center">{{compc.roomno}}</td>
+                                            <td class="center">{{compc.subject}}</td>
+                                            <td class="center">{{compc.problem_type}}</td>
+                                            <td class="center">{{compc.description}}</td>
+                                            <td class="center"> <button type="button" class="btn btn-info"  data-target="#history">{{compc.complaint_status}}</button></td>
+                                        {% endfor %}
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- all history close  -->
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+</body>
+</html>
+     <script>
+         $(document).ready(function () {
+             $('#dataTables-example').dataTable();
+         });
+
+ function boot(id)
+ {
+var a = id;
+ }
+
+         $(function() {
+
+    $('#login-form-link').click(function(e) {
+    $("#login-form").delay(100).fadeIn(100);
+    $("#register-form").fadeOut(100);
+    $("#HOLIDAYS").fadeOut(100);
+    $('#register-form-link').removeClass('active');
+    $('#form-link').removeClass('active');
+    $(this).addClass('active');
+    e.preventDefault();
+  });
+  $('#register-form-link').click(function(e) {
+    $("#register-form").delay(100).fadeIn(100);
+    $("#login-form").fadeOut(100);
+    $("#HOLIDAYS").fadeOut(100);
+    $('#login-form-link').removeClass('active');
+    $('#form-link').removeClass('active');
+    $(this).addClass('active');
+    e.preventDefault();
+  });
+  $('#form-link').click(function(e) {
+    $("#HOLIDAYS").delay(100).fadeIn(100);
+    $("#login-form").fadeOut(100);
+    $("#register-form").fadeOut(100);
+    $('#login-form-link').removeClass('active');
+    $('#register-form-link').removeClass('active');
+    $(this).addClass('active');
+    e.preventDefault();
+  });
+});
+
+    </script>

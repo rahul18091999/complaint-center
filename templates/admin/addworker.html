@@ -1,0 +1,264 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Admin page </title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+  <style type="text/css">
+    .nav {
+      background-color: white;
+      width: 100%;
+      height: 50%;
+      margin-top: 5px;
+      border-radius: 5px;
+
+    }
+
+    .logo {
+      width: 200px;
+      height: 100px;
+      padding: 10px;
+    }
+
+    body {
+      background-image:url(" {% static 'images/logo-back.jpg' %}");
+      background-repeat: no-repeat;
+      background-size: 120% 1600px;
+    }
+
+    #div {
+      width: 100%;
+    }
+
+    #div1 {
+      width: 30%;
+      float: left;
+    }
+
+    #div11 {
+      height: 250px;
+      width: 80%;
+      float: left;
+      margin: 30px;
+      margin-top: 70px;
+      background-color: #FFFFFF;
+    }
+
+    #div2 {
+      height: 600px;
+      width: 66%;
+      float: left;
+    }
+
+    #div22 {
+      padding: 50px;
+      background: white;
+      margin: 50px;
+    }
+
+    .dropbtn {
+      color: black;
+      padding: 16px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      border-top: 1px solid #777777;
+      width: 100%;
+
+      background: white;
+      ;
+    }
+
+    .dropdown {
+      position: relative;
+      display: block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: relative;
+      min-width: 160px;
+      ;
+      z-index: 1;
+      width: 100%;
+      text-align: center;
+    }
+
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #CCFFFF
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+      background: white;
+    }
+
+    .dropdown:hover .dropbtn {
+      background-color: #0099FF;
+      color: white;
+      font-weight: 500;
+    }
+
+    @media(max-width:868px) {
+      #div2 {
+        clear: both;
+        width: 96%;
+        margin: auto;
+
+        margin-top: 0px;
+      }
+
+      #div1 {
+        width: 96%;
+        margin: auto;
+
+        margin-top: 0px;
+      }
+
+      #div11 {
+        height: 250px;
+        margin: 50px;
+        margin-top: 40px;
+        background-color: #FFFFFF;
+
+        margin-left: 10%;
+      }
+
+
+    }
+  </style>
+</head>
+
+<body class="y">
+
+  <header class="">
+    <div class="col-md-12  col-md-offset-  nav">
+      <a href="#"><img src="{% static 'images/Logo-Mukand.jpg' %}" class="logo"></a>
+      <span style="font-size: 20px; color: #184bab; margin-left:50px; margin-top: 25px;">Seth Jai Parkash Mukand Lal
+        Institute of Engineering &amp; Technology (JMIT)</span>
+
+      <span style="margin-left: 300px; margin-top:60px; ">
+        ADMIN <a href="/user_login/logout"><span class="glyphicon glyphicon-log-out">logout</span></a>
+      </span>
+    </div>
+  </header>
+  <div id="div">
+    <div id="div1">
+      <div id="div11">
+        <div
+          style="width:100%; height:80px; color:black; font-size:24px; font-weight:700; text-align:center; line-height:80px; color:#666666">
+          <img src="{% static 'images/Logo-Mukand.jpg' %}"
+            style="height:60px; width:150px; margin-bottom:25px; float:left; margin-left:20px;"><label
+            style="color:black; margin-left:">Admin</label>
+        </div>
+        <div class="dropdown">
+          <button class="dropbtn">DEPARTMENT</button>
+          <div class="dropdown-content">
+            <a href="/adminpanel/addDepartment">ADD DEPARTMENT</a>
+            <a href="/adminpanel/showDepartment">SHOW DEPARTMENT</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <button class="dropbtn">WORKER</button>
+          <div class="dropdown-content">
+            <a href="/adminpanel/addWorker">ADD WORKER</a>
+            <a href="/adminpanel/addWorkerType">ADD WORKER Type</a>
+            <a href="/adminpanel/showWorker">SHOW WORKER</a>
+            <a href="/adminpanel/showWorkerType">SHOW WORKER Type</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <button class="dropbtn">USER</button>
+          <div class="dropdown-content">
+            <a href="/adminpanel/addUser">ADD USER</a>
+            <a href="/adminpanel/showUser">SHOW USER</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="div2">
+      <h3 style="text-align:center; color:white; margin-top:20px;">Add Worker</h3>
+      <div id="div22">
+        <form action="/adminpanel/addWorker" method="post">
+          {% csrf_token %}
+          {% if messages %}
+          {% for msg in messages %}
+          <h4 style="background-color: red;"></h4>
+          <div class="alert alert-danger" role="alert">
+            <center>
+            {{msg}}
+
+            </center>
+          </div>
+          {% endfor %} 
+          {% endif %}
+          <div class="form-group ">
+            
+            <label for="HodName">Worker type</label>
+            <select class="form-control" id="complainttype" rows="4" cols="20" placeholder=" Enter Complaint Type" name="types">
+              <option value="">select Worker Type</option>
+              {% for work in worker %}
+              <option value={{work.type}}>{{work.type}}</option>
+              {% endfor %}
+          </select>
+          </div>
+          <div class="form-group ">
+            <label for="HodName">Worker UserName</label>
+            <input type="text" class="form-control" id="exampleCheck1" aria-describedby="emailHelp" name="username"
+              required>
+          </div>
+          <div class="form-group"><label for="HodName">Name</label>
+            <div class="row">
+              <div class="col">
+                <input type="text" class="form-control" placeholder="First name" name="first_name" required>
+              </div>
+              <div class="col">
+                <input type="text" class="form-control" placeholder="Last name" name="last_name" required>
+              </div>
+            </div>
+          </div>
+          <div class="form-group ">
+            <label for="hodmail">Worker E-Mail</label>
+            <input type="email" class="form-control" id="exampleCheck1" aria-describedby="emailHelp" name="email">
+          </div>
+          <div class="form-group ">
+            <label for="hodmail">Mobile No.</label>
+
+            <input type="number" class="form-control" id="exampleCheck1" aria-describedby="emailHelp"
+              pattern="[0-9]{10}" name="worker_ph" required>
+          </div>
+          <label for="inputPassword5">Password</label>
+          <input type="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock"
+            name="password" required>
+          <small id="passwordHelpBlock" class="form-text text-muted">
+            Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces,
+            special characters, or emoji.
+          </small>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</body>
+
+</html>

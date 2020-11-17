@@ -1,0 +1,192 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>complint </title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <!-- Stylesheets -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+   
+    <style type="text/css">
+    	.nav
+    	{
+    		background-color:white; 
+    		width: 100%;
+    		height: 50%;
+    		margin-top:5px;
+    		border-radius: 5px;
+
+    	}
+    	.logo
+    	{
+    		width:200px;
+    		height:100px;
+    		padding: 10px;
+    	}
+   body
+    	{
+    		background-image: url("{% static 'images/logo-back.jpg' %}");
+    		background-repeat:no-repeat;
+    		background-size: 100%;
+    	}
+    	@media only screen and (max-width: 600px) {
+  body {
+    
+     		background-image: url("{% static 'images/logo-back.jpg' %}");
+    		background-repeat:no-repeat;
+    		background-attachment: fixed;
+    		background-size: auto;
+  }
+}
+.input-group-prepend span{
+width: 50px;
+background-color: #FFC312;
+color: black;
+border:0 !important;
+
+}
+
+input:focus{
+outline: 0 0 0 0  !important;
+box-shadow: 0 0 0 0 !important;
+}
+
+    </style>
+</head>
+<body class="y">
+	<header class="">
+		<div class="col-md-12  col-md-offset-  nav" >
+			<a href="/user_login/logout"><img src="{% static 'images/Logo-Mukand.jpg' %}" class="logo"></a>
+			 <span style="font-size: 20px; color: #184bab; margin-left:50px; margin-top: 25px;">Seth Jai Parkash Mukand Lal Institute of Engineering &amp; Technology (JMIT)</span>
+           
+           <span style="margin-left: 300px; margin-top:60px; ">
+                ADMIN <a href="/user_login/logout"><span class="glyphicon glyphicon-log-out">logout</span></a>
+            </span>
+           </div>
+	</header>
+	 <div class="col-md-8 col-md-offset-2" style="margin-top:50px; ">
+            <div class="contact-form">
+                <form  method="post"  onclick="return validation()" class="big-light">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label class="control-label col-sm-2" for="subject">Subject:</label>
+                  <div class="col-sm-10">          
+                    <input type="text" class="form-control" id="subject" placeholder="Enter Subject" name="subject">
+                    <span id="subject_id" class="text-danger"></span><br>
+                  </div>
+
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-2" for="Department">Department:</label>
+                  <div class="col-sm-10">          
+                    <select class="form-control" id="department" placeholder="Enter Department" name="department">
+                      <option> SELECT DEPERTMENT</option>
+                   
+                      {% for depa in dep %}
+                        <option value={{depa.Department_name}}>{{depa.Department_name}}</option>
+                        {% endfor %}
+                    </select>
+                    <span id="department_id" class="text-danger"></span><br>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-2" for="roomno">Room No.</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="roomno" placeholder="Enter Room No." name="roomno">
+                    <span id="roomno_id" class="text-danger"></span><br>
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <label class="control-label col-sm-2" for="Complainttype">complaintType</label>
+                  <div class="col-sm-10">
+                    <select class="form-control" id="complainttype" rows="4" cols="20" placeholder=" Enter Complaint Type" name="types">
+                        <option>select complaint Type</option>
+                        {% for work in wor %}
+                        <option value={{work.type}}>{{work.type}}</option>
+                        {% endfor %}
+                    </select><br>
+                    </div>
+                </div>
+                    <div class="form-group">
+                  <label class="control-label col-sm-2" for="subject">Description</label>
+                  <div class="col-sm-10">          
+                    <input type="text" class="form-control" id="subject" placeholder="Description" name="description">
+                    <span id="subject_id" class="text-danger"></span><br>
+                  </div>
+                    <span id="complainttype_id" class="text-danger"></span><br>
+                  </div>
+                
+                <div class="form-grsoup">        
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default">Submit</button>
+                  </div>
+                </div>
+
+            </form>
+            </div>
+        </div>
+
+
+
+
+</body>
+</html>
+<script type="text/javascript">
+    function validation() 
+    {
+        var subject= document.getElementById('subject').value;
+        var department= document.getElementById('department').value;
+        var roomno= document.getElementById('roomno').value;
+        var complainttype= document.getElementById('complainttype').value;
+
+        if (subject == "")
+         {      
+           document.getElementById('subject_id').innerHTML="** please fil the subject field **";
+            return false;
+         }
+          else
+         {
+            document.getElementById('subject_id').innerHTML="";
+         }
+         if (department == "")
+         {      
+
+           document.getElementById('department_id').innerHTML="** please select department field **";
+            return false;
+         }
+          else
+         {
+            document.getElementById('department_id').innerHTML="";
+         }
+         if (roomno == "")
+         {      
+
+           document.getElementById('roomno_id').innerHTML="** please fil the room no field **";
+            return false;
+         }
+         else
+         {
+            document.getElementById('roomno_id').innerHTML="";
+         }
+
+         if (complainttype == "")
+         {      
+
+           document.getElementById('complainttype_id').innerHTML="**  please select  Complaint type field **";
+            return false;
+         }
+         else
+         {
+            document.getElementById('complainttype_id').innerHTML="";
+         }
+    }
+</script>

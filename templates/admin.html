@@ -1,0 +1,239 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin page </title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <!-- Stylesheets -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+   
+    <style type="text/css">
+      .nav
+      {
+        background-color:white; 
+        width: 100%;
+        height: 50%;
+        margin-top:5px;
+        border-radius: 5px;
+
+      }
+      .logo
+      {
+        width:200px;
+        height:100px;
+        padding: 10px;
+      }
+   body
+      {
+        background-image: url(" {% static 'images/logo-back.jpg' %}");
+        background-repeat:no-repeat;
+        background-size: 100%;
+      }
+      @media only screen and (max-width: 600px) {
+  body {
+    
+        background-image: url{% static 'images/logo-back.jpg' %};
+        background-repeat:no-repeat;
+        background-attachment: fixed;
+        background-size: auto;
+  }
+}
+.input-group-prepend span{
+width: 50px;
+background-color: #FFC312;
+color: black;
+border:0 !important;
+
+}
+
+input:focus{
+outline: 0 0 0 0  !important;
+box-shadow: 0 0 0 0 !important;
+}
+
+    </style>
+</head>
+<body class="y">
+    
+  <header class="">
+    <div class="col-md-12  col-md-offset-  nav" >
+      <a href="#"><img src="{% static 'images/Logo-Mukand.jpg' %}" class="logo"></a>
+       <span style="font-size: 20px; color: #184bab; margin-left:50px; margin-top: 25px;">Seth Jai Parkash Mukand Lal Institute of Engineering &amp; Technology (JMIT)</span>
+           
+           <span style="margin-left: 300px; margin-top:60px; ">
+                ADMIN <a href="/user_login/logout"><span class="glyphicon glyphicon-log-out">logout</span></a>
+            </span>
+    </div>
+  </header>
+
+  <div class="row" style="margin-left: 10px;margin-top: 20px;">
+    <div class="col-10 col-md-4">
+      <div class="list-group" id="list-tab" role="tablist">
+        <a class="list-group-item list-group-item-action" id="list-home-list"  href="#list-home"
+        role="tab" aria-controls="home"><img src="{% static 'images/Logo-Mukand.jpg' %}" style="width:90px;height:40px; float: left;">&nbsp;<strong style="padding-left: 20px; padding-bottom:0px; font-size: 22px;">Admin</strong></a>
+        <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home"
+        role="tab" aria-controls="home">DEPARTMENT</a>
+        <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile"
+        role="tab" aria-controls="profile">WORKER</a>
+       <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages"
+        role="tab" aria-controls="messages">USER</a>
+      
+      </div>
+    </div>
+    <div class="col-10 col-md-6"><br>
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    ADD DEPARTMENT
+        </button>
+        <br>
+        <ul class="list-group">
+  <li class="list-group-item">Example Dept<button type="button" class="btn btn-primary float-right">Delete</button><button type="button" class="btn btn-primary float-right mr-3 ">Edit
+</button></li>
+</ul><br>
+          <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+    <form action="/adminpanel/dep_save" method="post">
+    {% csrf_token %}
+              <div class="form-group">
+    <label for="HodName">H.O.D(Head Of Department)</label>
+    <input type="text" class="form-control" id="HodName" name="dep_hod" >
+    <small id="emailHelp" class="form-text text-muted">HOD of your department</small>
+              </div>
+            <div class="form-group">
+    <label for="deptname">Department Name</label>
+    <input type="text" class="form-control" id="deptname" name="dep_name">
+            </div>
+            <div class="form-group ">
+    <label for="HodName">UserName</label>
+    <input type="text" class="form-control" name="hod_username">
+          </div>
+          <div class="form-group ">
+    <label for="hodmail">H.O.D E-Mail</label>
+    <input type="email" class="form-control" id="exampleCheck1" aria-describedby="emailHelp" name="hod_email">
+          </div>
+          <div class="form-group ">
+    <label for="hodmail">H.O.D Phone</label>
+    <input type="text" class="form-control" id="exampleCheck1" aria-describedby="emailHelp" name="hod_ph">
+          </div>
+          <div class="form-group ">
+    <label for="hodmail">password</label>
+    <input type="password" class="form-control" id="exampleCheck1" aria-describedby="emailHelp" name="hod_password">
+          </div>
+  <button type="submit" class="btn btn-primary">Submit</button> 
+</form>
+        </div>
+      </div>
+    </div>
+      <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample">
+    ADD WORKER
+  </button><br>
+  <ul class="list-group">
+  <li class="list-group-item">Example Worker<button type="button" class="btn btn-primary float-right">Delete</button><button type="button" class="btn btn-primary float-right mr-3 ">Edit
+</button></li>
+</ul><br>
+      <div class="collapse" id="collapseExample1">
+  <div class="card card-body">
+    <form action="/adminpanel/work_save" method="post">
+    {% csrf_token %}
+    <div class="form-group ">
+    <label for="HodName">Worker type</label>
+    <input type="text" class="form-control" id="exampleCheck1" aria-describedby="emailHelp" name="types">
+    </div>
+     <div class="form-group ">
+    <label for="HodName">Worker UserName</label>
+    <input type="text" class="form-control" id="exampleCheck1" aria-describedby="emailHelp" name="username">
+    </div>
+    <div class="form-group"><label for="HodName">Name</label>
+      <div class="row">
+        <div class="col">
+      <input type="text" class="form-control" placeholder="First name" name="first_name">
+        </div>
+        <div class="col">
+      <input type="text" class="form-control" placeholder="Last name" name="last_name">
+        </div>
+      </div>
+    </div>
+    <div class="form-group ">
+    <label for="hodmail">Worker E-Mail</label>
+    <input type="email" class="form-control" id="exampleCheck1" aria-describedby="emailHelp" name="email">
+    </div>
+  <div class="form-group ">
+    <label for="hodmail">Mobile No.</label>
+
+    <input type="numbers" class="form-control" id="exampleCheck1" aria-describedby="emailHelp" pattern="[0-9]{9}" name="worker_ph">
+  </div>
+  <label for="inputPassword5">Password</label>
+   <input type="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock" name="password">
+    <small id="passwordHelpBlock" class="form-text text-muted">
+  Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+    </small>
+       <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+      <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">
+    ADD USER
+  </button>
+  <br>
+  <ul class="list-group">
+  <li class="list-group-item">Example user<button type="button" class="btn btn-primary float-right">Delete</button><button type="button" class="btn btn-primary float-right mr-3 ">Edit
+</button></li>
+</ul>
+<br>
+   <div class="collapse" id="collapseExample2">
+   <div class="card card-body">
+    <form>
+    {% csrf_token %}
+    <div class="form-group ">
+    <label for="hodmail">UserName</label>
+    <input type="text" class="form-control" id="exampleCheck1" aria-describedby="emailHelp" name="user_username">
+  </div>
+<div class="form-group"><label for="USERname">Name</label>
+  <div class="row">
+    <div class="col">
+      <input type="text" class="form-control" placeholder="First name" name="first_name">
+    </div>
+    <div class="col">
+      <input type="text" class="form-control" placeholder="Last name" name="last_name">
+    </div>
+  </div>
+  </div>
+  <div class="form-group ">
+    <label for="hodmail">User E-Mail</label>
+    <input type="email" class="form-control" id="exampleCheck1" aria-describedby="emailHelp" name="user_email">
+  </div>
+  <div class="form-group ">
+    <label for="hodmail">Mobile No.</label>
+
+    <input type="numbers" class="form-control" id="exampleCheck1" aria-describedby="emailHelp" pattern="[0-9]{9}" name="user_ph">
+  </div>
+  <label for="inputPassword5">Password</label>
+<input type="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock" name="user_pass">
+<small id="passwordHelpBlock" class="form-text text-muted">
+  Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+</small>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+  </div>
+</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>
